@@ -1,25 +1,24 @@
-# Proyecto 1 BI
+# ODS - Object Detection System
 
-## Cómo utilizar
+A machine learning system for text classification organized as a uv workspace monorepo.
 
-### Requisitos previos
+## Architecture
 
-Instala [uv](https://docs.astral.sh/uv/getting-started/installation/) siguiendo las instrucciones oficiales.
+This project is organized into two main workspaces:
 
-### Configuración del entorno
+- **`api/`** - REST API service for machine learning inference and training
+- **`web/`** - Web UI for interacting with the machine learning models
 
-Una vez instalado uv, ejecuta el siguiente comando en la raíz del proyecto:
+## Prerequisites
+
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/) following the official instructions.
+
+## Setup
+
+Install all workspace dependencies from the project root:
 
 ```bash
 uv sync
 ```
 
-### Características importantes
-
-- **No es necesario instalar Python manualmente**: `uv` se encarga de instalar Python automáticamente o utilizar una instalación existente junto con todas las dependencias necesarias.
-
-- **Entorno virtual automático**: Este comando creará un entorno virtual (virtual environment) que podrás utilizar para el proyecto, garantizando el aislamiento de las dependencias.
-
-### Próximos pasos
-
-Una vez completada la sincronización, el entorno estará listo para usar. Puedes activar el entorno virtual y comenzar a trabajar con el proyecto.
+This will install dependencies for both the API and web workspaces.

@@ -8,7 +8,22 @@ wheels/
 
 # Virtual environments
 .venv/
+api/.venv/
+web/.venv/
 
 .ruff_cache/
+api/.ruff_cache/
+web/.ruff_cache/
 
+# Data directories
 data/
+api/data/
+web/data/
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db

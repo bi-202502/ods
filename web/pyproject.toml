@@ -1,0 +1,9 @@
+[project]
+name = "ods-web"
+version = "0.0.1"
+description = "ODS Web UI for machine learning inference"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "streamlit>=1.49.1",
+]

@@ -1,0 +1,13 @@
+[project]
+name = "ods-api"
+version = "0.0.1"
+description = "ODS REST API for machine learning inference and training"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi[standard]==0.116.1",
+    "joblib>=1.5.2",
+    "nltk>=3.9.1",
+    "scikit-learn>=1.7.2",
+    "sqlmodel==0.0.24",
+]
