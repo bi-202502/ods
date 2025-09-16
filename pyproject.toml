@@ -1,0 +1,18 @@
+[project]
+name = "ods"
+version = "0.0.1"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi[standard]==0.116.1",
+    "joblib>=1.5.2",
+    "nltk>=3.9.1",
+    "scikit-learn>=1.7.2",
+    "sqlmodel==0.0.24",
+]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.3.0",
+    "ruff>=0.13.0",
+]

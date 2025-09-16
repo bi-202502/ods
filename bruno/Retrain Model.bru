@@ -1,0 +1,149 @@
+meta {
+  name: Retrain Model
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/retrain
+  body: json
+  auth: none
+}
+
+body:json {
+  [
+    {
+      "text": "Ending poverty in all its forms everywhere requires comprehensive social protection systems",
+      "label": 1
+    },
+    {
+      "text": "Ensuring healthy lives and promoting well-being for all at all ages through universal health coverage",
+      "label": 3
+    },
+    {
+      "text": "Quality education ensures inclusive and equitable learning opportunities for all",
+      "label": 4
+    },
+    {
+      "text": "Eradicating extreme poverty and reducing inequality through economic empowerment",
+      "label": 1
+    },
+    {
+      "text": "Strengthening health systems and ensuring access to essential medicines and vaccines",
+      "label": 3
+    },
+    {
+      "text": "Promoting lifelong learning opportunities and skills development for sustainable development",
+      "label": 4
+    },
+    {
+      "text": "Supporting vulnerable populations and ensuring no one is left behind in poverty reduction",
+      "label": 1
+    },
+    {
+      "text": "Reducing maternal and child mortality through improved healthcare services",
+      "label": 3
+    },
+    {
+      "text": "Building resilient education infrastructure and promoting inclusive learning environments",
+      "label": 4
+    },
+    {
+      "text": "Implementing social safety nets to protect the most vulnerable from economic shocks",
+      "label": 1
+    },
+    {
+      "text": "Combating infectious diseases through vaccination programs and disease surveillance",
+      "label": 3
+    },
+    {
+      "text": "Ensuring equal access to primary and secondary education for girls and boys",
+      "label": 4
+    },
+    {
+      "text": "Creating decent jobs and sustainable livelihoods to reduce income inequality",
+      "label": 1
+    },
+    {
+      "text": "Preventing and treating mental health disorders and promoting psychological well-being",
+      "label": 3
+    },
+    {
+      "text": "Training qualified teachers and improving educational resources in rural areas",
+      "label": 4
+    },
+    {
+      "text": "Addressing the root causes of poverty through land reform and financial inclusion",
+      "label": 1
+    },
+    {
+      "text": "Strengthening emergency preparedness and response capabilities for health crises",
+      "label": 3
+    },
+    {
+      "text": "Promoting digital literacy and STEM education for future workforce development",
+      "label": 4
+    },
+    {
+      "text": "Expanding access to clean water and sanitation to improve living conditions for the poor",
+      "label": 1
+    },
+    {
+      "text": "Reducing the burden of non-communicable diseases through prevention and early detection",
+      "label": 3
+    }
+  ]
+}
+
+assert {
+  res.status: eq 200
+  res.body.precision: gte 0.0
+  res.body.precision: lte 1.0
+  res.body.recall: gte 0.0
+  res.body.recall: lte 1.0
+  res.body.f1score: gte 0.0
+  res.body.f1score: lte 1.0
+}
+
+tests {
+  test("Response contains valid metrics", function() {
+    expect(res.body).to.have.property('precision');
+    expect(res.body).to.have.property('recall');
+    expect(res.body).to.have.property('f1score');
+    expect(typeof res.body.precision).to.equal('number');
+    expect(typeof res.body.recall).to.equal('number');
+    expect(typeof res.body.f1score).to.equal('number');
+  });
+}
+
+docs {
+  # Retrain Model Endpoint
+  
+  This endpoint retrains the machine learning model with new training data for ODS classification.
+  
+  ## Request
+  - **Method**: POST
+  - **URL**: `/retrain`
+  - **Body**: Array of training data objects
+  
+  ## Training Data Format
+  Each training sample should contain:
+  - `text`: String content related to an ODS goal
+  - `label`: Integer representing the ODS number (1, 3, or 4)
+  
+  ## ODS Labels
+  - **1**: No Poverty - Content about poverty reduction, social protection, economic empowerment
+  - **3**: Good Health and Well-being - Content about healthcare, disease prevention, medical services
+  - **4**: Quality Education - Content about education, learning opportunities, skills development
+  
+  ## Requirements
+  - Minimum 5 training samples required
+  - Data will be split 80/20 for training/validation
+  - Creates a new model version and saves to disk
+  
+  ## Response
+  Returns model evaluation metrics:
+  - `precision`: Macro-averaged precision (0.0-1.0)
+  - `recall`: Macro-averaged recall (0.0-1.0)
+  - `f1score`: Macro-averaged F1 score (0.0-1.0)
+}

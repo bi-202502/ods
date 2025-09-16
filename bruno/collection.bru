@@ -1,0 +1,49 @@
+docs {
+  # BI Server ML API Collection
+  
+  This collection contains tests and documentation for the BI Server machine learning API, which provides text classification for Sustainable Development Goals (ODS).
+  
+  ## Overview
+  
+  The BI Server is a FastAPI-based machine learning service that classifies text content according to specific Sustainable Development Goals (ODS). The API supports model training and inference operations.
+  
+  ## Supported ODS Goals
+  
+  The system currently supports classification for three ODS goals:
+  
+  - **ODS 1: No Poverty** - Content related to poverty reduction, social protection systems, economic empowerment, and ensuring basic needs are met
+  - **ODS 3: Good Health and Well-being** - Content about healthcare services, disease prevention, medical treatment, mental health, and overall well-being
+  - **ODS 4: Quality Education** - Content regarding education systems, learning opportunities, skills development, teacher training, and educational infrastructure
+  
+  ## API Endpoints
+  
+  ### POST /retrain
+  Trains a new version of the ML model with provided training data. Requires minimum 5 samples and returns evaluation metrics.
+  
+  ### POST /infer
+  Performs text classification using the latest trained model. Returns predicted ODS numbers for input texts.
+  
+  ## Usage Workflow
+  
+  1. **Train a Model**: Use the "Retrain Model" request with training data containing text samples and their corresponding ODS labels
+  2. **Test Predictions**: Use the "Infer Text" request to classify new text content and verify the model works correctly
+  3. **Iterate**: Retrain with additional data as needed to improve model performance
+  
+  ## Environment Setup
+  
+  - **Local Environment**: http://localhost:8000
+  - Ensure the BI Server is running before executing requests
+  - Set the `BI_ROOT` environment variable for model storage location
+  
+  ## Model Persistence
+  
+  - Models are versioned and stored as joblib files
+  - Database tracks model metadata (version, precision, recall, f1score)
+  - Latest model version is automatically used for inference
+  
+  ## Error Handling
+  
+  - 500 error if no trained model exists for inference
+  - Validation errors for insufficient training data
+  - Database connection errors for model persistence issues
+}

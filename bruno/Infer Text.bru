@@ -1,0 +1,81 @@
+meta {
+  name: Infer Text
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/infer
+  body: json
+  auth: none
+}
+
+body:json {
+  [
+    "Microfinance programs help reduce poverty in rural communities",
+    "Vaccination campaigns prevent disease outbreaks and save lives",
+    "Teacher training programs improve educational outcomes for students"
+  ]
+}
+
+assert {
+  res.status: eq 200
+  res.body: isArray
+}
+
+tests {
+  test("Response is array of integers", function() {
+    expect(Array.isArray(res.body)).to.be.true;
+    expect(res.body.length).to.equal(3);
+    res.body.forEach(prediction => {
+      expect(typeof prediction).to.equal('number');
+      expect(Number.isInteger(prediction)).to.be.true;
+    });
+  });
+  
+  test("Predictions are valid ODS numbers", function() {
+    res.body.forEach(prediction => {
+      expect([1, 3, 4]).to.include(prediction);
+    });
+  });
+}
+
+docs {
+  # Infer Text Endpoint
+  
+  This endpoint performs inference on text data using the latest trained model to predict ODS classifications.
+  
+  ## Request
+  - **Method**: POST
+  - **URL**: `/infer`
+  - **Body**: Array of text strings to classify
+  
+  ## Input Format
+  Send an array of strings containing text content to be classified:
+  ```json
+  [
+    "Text about poverty reduction programs",
+    "Content related to healthcare initiatives",
+    "Educational policy description"
+  ]
+  ```
+  
+  ## Prerequisites
+  - A model must be trained first using the `/retrain` endpoint
+  - The system uses the latest model version for predictions
+  
+  ## Response
+  Returns an array of integers representing predicted ODS numbers:
+  ```json
+  [1, 3, 4]
+  ```
+  
+  ## ODS Predictions
+  - **1**: No Poverty
+  - **3**: Good Health and Well-being
+  - **4**: Quality Education
+  
+  ## Error Handling
+  - Returns 500 if no trained model is available
+  - Requires at least one text string in the input array
+}
